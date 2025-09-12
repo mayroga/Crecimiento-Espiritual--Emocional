@@ -1,4 +1,5 @@
 flask==3.0.3
 langdetect
 google-generativeai
+gTTS
 gunicorn
