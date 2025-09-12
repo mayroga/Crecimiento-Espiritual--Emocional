@@ -9,6 +9,7 @@ body { font-family: Arial; text-align:center; padding:30px; background:#f0f8ff;}
 #chat-box { width: 90%; max-width: 600px; height: 400px; border:1px solid #ccc; overflow-y: scroll; margin:auto; padding:10px; background:white;}
 input, button { padding:10px; font-size:1em; margin:5px;}
 .donation { margin-top:20px; }
+audio { margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -24,11 +25,12 @@ input, button { padding:10px; font-size:1em; margin:5px;}
     <button onclick="donate()">Donar</button>
 </div>
 
+<audio id="audio-player" controls style="display:none;"></audio>
+
 <script src="/static/script.js"></script>
 <script>
 async function donate(){
-    // Redirige a Stripe Checkout u otro link de donación
-    window.open("https://buy.stripe.com/test_xxx", "_blank");
+    window.open("https://buy.stripe.com/test_xxx", "_blank"); // Reemplaza con tu enlace real
 }
 </script>
 </body>
