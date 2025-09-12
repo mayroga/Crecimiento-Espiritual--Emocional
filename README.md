@@ -1,7 +1,3 @@
-# Crecimiento-Espiritual--Emocional
-Un espacio gratuito, abierto 24 horas, todos los días, donde cada persona —sin importar su fe o cultura— encuentra compañía, paz, bienestar natural. Una casa espiritual universal
-# Crecimiento Espiritual-Emocional
-
 Crecimiento Espiritual-Emocional es un espacio digital abierto las 24 horas, todos los días, para el bienestar espiritual y emocional de cualquier persona, sin importar su religión o creencia. Funciona como un guía espiritual virtual que responde mensajes de texto, detecta el idioma del usuario y adapta la respuesta a la religión mencionada, usando **Gemini IA**. Además, permite escuchar las respuestas con un botón “play” y cuenta con un botón de donaciones para apoyar el proyecto.
 
 ---
