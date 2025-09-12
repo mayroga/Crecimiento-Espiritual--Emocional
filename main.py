@@ -42,10 +42,10 @@ def chat():
     else:
         religion = "universal"
 
-    # Generación de respuesta con Gemini IA (modelo válido)
+    # Generación de respuesta con Gemini IA (modelo actualizado)
     prompt = f"Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
-    response = genai.responses.create(
-        model="models/chat-bison-001",  # Modelo de chat conversacional
+    response = genai.responder(
+        model="models/chat-bison-001",  # Modelo conversacional válido
         prompt=prompt,
         temperature=0.7
     )
