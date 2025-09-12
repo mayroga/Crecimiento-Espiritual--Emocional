@@ -20,6 +20,10 @@ def home():
 @app.route("/chat", methods=["POST"])
 def chat():
     user_msg = request.json.get("message")
+    if not user_msg:
+        return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
+
+    # Detecta idioma
     try:
         idioma = detect(user_msg)
     except:
@@ -38,16 +42,16 @@ def chat():
     else:
         religion = "universal"
 
-    # Generación de respuesta con Gemini IA
+    # Generación de respuesta con Gemini IA (modelo válido)
     prompt = f"Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
     response = genai.responses.create(
-        model="models/text-bison-001",
+        model="models/chat-bison-001",  # Modelo de chat conversacional
         prompt=prompt,
         temperature=0.7
     )
     reply_text = response.output_text
 
-    # Convertir texto a voz
+    # Convertir texto a voz (TTS)
     tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
     tts = gTTS(text=reply_text, lang=tts_lang)
     mp3_fp = BytesIO()
