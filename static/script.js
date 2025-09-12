@@ -1,25 +1,29 @@
-async function sendMessage(){
-    const msgInput = document.getElementById("message");
-    const msg = msgInput.value;
-    if(!msg) return;
-
+async function sendMessage() {
+    const messageInput = document.getElementById("message");
     const chatBox = document.getElementById("chat-box");
-    chatBox.innerHTML += `<p><b>Tú:</b> ${msg}</p>`;
-    msgInput.value = "";
-
-    const res = await fetch("/chat", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({message: msg})
-    });
-    const data = await res.json();
-
-    chatBox.innerHTML += `<p><b>Guía:</b> ${data.reply}</p>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // reproducir audio
     const audioPlayer = document.getElementById("audio-player");
-    audioPlayer.src = "data:audio/mp3;base64," + data.audio;
-    audioPlayer.style.display = "block";
-    audioPlayer.play();
+
+    const msg = messageInput.value;
+    if (!msg) return;
+
+    chatBox.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
+    messageInput.value = "";
+
+    try {
+        const res = await fetch("/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({message: msg})
+        });
+        const data = await res.json();
+
+        chatBox.innerHTML += `<div><b>Asistente:</b> ${data.reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        audioPlayer.src = `data:audio/mp3;base64,${data.audio}`;
+        audioPlayer.style.display = "block";
+        audioPlayer.play();
+    } catch (err) {
+        chatBox.innerHTML += `<div><b>Error:</b> No se pudo conectar al servidor.</div>`;
+    }
 }
