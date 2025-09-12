@@ -5,8 +5,12 @@ from langdetect import detect
 from gtts import gTTS
 import base64
 from io import BytesIO
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
+# Configura tu API Key de Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route("/")
@@ -20,8 +24,8 @@ def chat():
         idioma = detect(user_msg)
     except:
         idioma = "es"
-    
-    # Detección de religión básica
+
+    # Detección básica de religión
     lower_msg = user_msg.lower()
     if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
         religion = "cristianismo"
@@ -34,19 +38,24 @@ def chat():
     else:
         religion = "universal"
 
-    # Gemini IA
-    model = genai.GenerativeModel("gemini-pro")
+    # Generación de respuesta con Gemini IA
     prompt = f"Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
-    response = model.generate_content(prompt)
+    response = genai.responses.create(
+        model="models/text-bison-001",
+        prompt=prompt,
+        temperature=0.7
+    )
+    reply_text = response.output_text
 
-    # Convertir texto a voz (TTS)
-    tts = gTTS(text=response.text, lang=idioma[:2])  # usa los primeros 2 caracteres del código ISO
+    # Convertir texto a voz
+    tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
+    tts = gTTS(text=reply_text, lang=tts_lang)
     mp3_fp = BytesIO()
     tts.write_to_fp(mp3_fp)
     mp3_fp.seek(0)
     audio_base64 = base64.b64encode(mp3_fp.read()).decode('utf-8')
 
-    return jsonify({"reply": response.text, "audio": audio_base64})
+    return jsonify({"reply": reply_text, "audio": audio_base64})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
