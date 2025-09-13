@@ -7,45 +7,137 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .chat-container { max-width: 768px; height: 95vh; display: flex; flex-direction: column; margin: auto; }
-        .message { padding: 1rem; border-radius: 1rem; margin-bottom: 0.5rem; max-width: 80%; word-wrap: break-word; }
-        .user-message { background-color: #3b82f6; color: white; align-self: flex-end; border-bottom-right-radius: 0.25rem; }
-        .ai-message { background-color: #ffffff; color: #374151; align-self: flex-start; border-bottom-left-radius: 0.25rem; position: relative; }
-        .audio-icon { cursor: pointer; margin-left: 0.5rem; width: 1.25rem; height: 1.25rem; display: inline-block; }
-        .payment-section { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; margin:0; padding:0; }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            max-width: 768px;
+            margin: auto;
+        }
+
+        .payment-section {
+            background-color: #f3f4f6;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .payment-section input, 
+        .payment-section button {
+            width: 100%;
+            font-size: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #messages-container {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            word-wrap: break-word;
+            font-size: 1rem;
+        }
+
+        .user-message {
+            background-color: #3b82f6;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .ai-message {
+            background-color: #ffffff;
+            color: #374151;
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+            position: relative;
+        }
+
+        .audio-icon {
+            cursor: pointer;
+            margin-left: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: inline-block;
+        }
+
+        .chat-input-section {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .chat-input-section input {
+            flex: 1;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #d1d5db;
+        }
+
+        .chat-input-section button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 0.75rem;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+        }
+
+        @media (max-width: 500px) {
+            .container { height: 100vh; width: 100vw; border-radius: 0; }
+            .chat-input-section { flex-direction: column; }
+            .chat-input-section input, .chat-input-section button { width: 100%; }
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center p-4 sm:p-6">
+<body>
 
-    <div class="chat-container bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col w-full">
-        <header class="bg-indigo-600 text-white p-4 text-center text-xl font-semibold rounded-t-2xl">
-            Crecimiento Espiritual-Emocional
-        </header>
-
-        <div id="messages-container" class="flex-grow p-4 overflow-y-auto space-y-4"></div>
-
-        <div class="p-4 bg-gray-100 flex items-center rounded-b-2xl">
-            <input type="text" id="user-input" placeholder="Escribe tu mensaje..."
-                   class="flex-grow p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 shadow-sm">
-            <button id="send-button"
-                    class="ml-2 bg-indigo-600 text-white p-3 rounded-xl transition-all duration-200 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.917H17.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.917a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z" />
-                </svg>
-            </button>
-        </div>
-        
-        <div class="p-4 bg-gray-100 rounded-b-2xl payment-section">
-            <div class="flex items-center w-full max-w-sm">
-                <input type="number" id="donation-amount" placeholder="Monto donación USD" min="4.99" step="0.01" class="border p-2 rounded-xl flex-grow mr-2">
-                <button id="donate-button" class="bg-green-500 text-white p-2 rounded-xl hover:bg-green-600 transition">Aporta lo que quieras</button>
-            </div>
-            <div class="flex items-center w-full max-w-sm">
-                <button id="service-button" class="bg-blue-500 text-white p-2 rounded-xl hover:bg-blue-600 transition w-full">Paga tu servicio ($10.00)</button>
-            </div>
+    <div class="container">
+        <!-- Sección de pagos siempre visible -->
+        <div class="payment-section">
+            <input type="number" id="donation-amount" placeholder="Monto donación USD" min="4.99" step="0.01">
+            <button id="donate-button">Aporta lo que quieras</button>
+            <button id="service-button">Paga tu servicio ($10.00)</button>
         </div>
 
+        <!-- Chat scrollable -->
+        <div class="chat-container">
+            <header class="bg-indigo-600 text-white p-4 text-center text-xl font-semibold rounded-t-2xl">
+                Crecimiento Espiritual-Emocional
+            </header>
+
+            <div id="messages-container"></div>
+
+            <div class="chat-input-section">
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+                <button id="send-button">Enviar</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://js.stripe.com/v3/"></script>
@@ -107,38 +199,20 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        // Manejador del botón de donación
         document.getElementById('donate-button').addEventListener('click', async () => {
             let amount = document.getElementById('donation-amount').value;
-            if (amount < 4.99) {
-                alert("La donación mínima es $4.99 USD");
-                return;
-            }
-            const res = await fetch("/create-donation-session", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: parseFloat(amount) })
-            });
+            if (amount < 4.99) { alert("La donación mínima es $4.99 USD"); return; }
+            const res = await fetch("/create-donation-session", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: parseFloat(amount) }) });
             const data = await res.json();
-            if (data.url) {
-                window.open(data.url, '_blank'); // Abrir Stripe en nueva pestaña
-            } else {
-                alert('Error al crear la sesión de donación: ' + data.error);
-            }
+            if (data.url) { window.open(data.url, '_blank'); } else { alert('Error: ' + data.error); }
         });
 
-        // Manejador del botón de servicio (nuevo)
         document.getElementById('service-button').addEventListener('click', async () => {
-            const res = await fetch("/create-service-session", {
-                method: 'POST'
-            });
+            const res = await fetch("/create-service-session", { method: 'POST' });
             const data = await res.json();
-            if (data.url) {
-                window.open(data.url, '_blank'); // Abrir Stripe en nueva pestaña
-            } else {
-                alert('Error al crear la sesión de pago de servicio: ' + data.error);
-            }
+            if (data.url) { window.open(data.url, '_blank'); } else { alert('Error: ' + data.error); }
         });
     </script>
+
 </body>
 </html>
