@@ -11,15 +11,15 @@ import stripe
 app = Flask(__name__)
 CORS(app)
 
-# Configura Gemini / Google Generative AI
+# Configura tu API Key de Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Configura Stripe
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")  # Tu secret key en variables de entorno
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route("/")
 def home():
-    return render_template("index.html", title="Crecimiento Espiritual-Emocional", stripe_pub_key=os.getenv("STRIPE_PUBLISHABLE_KEY"))
+    return render_template("index.html", title="Crecimiento Espiritual-Emocional")
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -27,11 +27,13 @@ def chat():
     if not user_msg:
         return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
 
+    # Detecta idioma
     try:
         idioma = detect(user_msg)
     except:
         idioma = "es"
 
+    # Detección básica de religión
     lower_msg = user_msg.lower()
     if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
         religion = "cristianismo"
@@ -44,17 +46,17 @@ def chat():
     else:
         religion = "universal"
 
-    # Genera respuesta
+    # Generación de respuesta con Gemini IA
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"Saluda primero al usuario, pregunta cómo lo puedes ayudar hoy, y actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
+        prompt = f"Saluda primero al usuario y ofrece ayuda espiritual antes de responder. Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
         response = model.generate_content(prompt)
         reply_text = response.text
     except Exception as e:
         print(f"Error al llamar a la API de Gemini: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    # Convertir a audio
+    # Convertir texto a voz (TTS)
     tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
@@ -68,59 +70,29 @@ def chat():
 
     return jsonify({"reply": reply_text, "audio": audio_base64})
 
-# Endpoint Stripe: Donaciones
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
+    data = request.json
+    amount = int(float(data["amount"]) * 100)  # convertir a centavos
+
     try:
-        data = request.json
-        amount = int(data.get("amount", 0)) * 100  # convertir a centavos USD
-        if amount < 50:  # Monto mínimo $0.50
-            amount = 50
-
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            mode='payment',
+            payment_method_types=["card"],
             line_items=[{
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {'name': 'Donación abierta'},
-                    'unit_amount': amount,
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": "Donación a May Roga LLC"},
+                    "unit_amount": amount,
                 },
-                'quantity': 1,
+                "quantity": 1,
             }],
-            success_url="https://tu-dominio.com/success",
-            cancel_url="https://tu-dominio.com/cancel",
+            mode="payment",
+            success_url="https://tuweb.com/gracias",  # Cambia a tu URL
+            cancel_url="https://tuweb.com/cancelado", # Cambia a tu URL
         )
-        return jsonify({'id': session.id})
+        return jsonify({"url": session.url})
     except Exception as e:
-        return jsonify(error=str(e)), 403
-
-# Endpoint Stripe: Pago de servicio
-@app.route("/create-service-session", methods=["POST"])
-def create_service_session():
-    try:
-        data = request.json
-        amount = int(data.get("amount", 0)) * 100  # monto en centavos
-        if amount < 100:  # mínimo $1
-            amount = 100
-
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            mode='payment',
-            line_items=[{
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {'name': 'Servicio de Risoterapia'},
-                    'unit_amount': amount,
-                },
-                'quantity': 1,
-            }],
-            success_url="https://tu-dominio.com/success",
-            cancel_url="https://tu-dominio.com/cancel",
-        )
-        return jsonify({'id': session.id})
-    except Exception as e:
-        return jsonify(error=str(e)), 403
+        return jsonify(error=str(e)), 400
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
