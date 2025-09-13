@@ -45,13 +45,15 @@ def chat():
     # Generación de respuesta con Gemini IA
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
-        # FORZAR idioma y saludo inicial
-        prompt = (
-            f"RESPONDE SOLO EN {idioma.upper()} y NUNCA CAMBIES DE IDIOMA. "
-            f"Primero saluda al usuario cordialmente y luego pregunta cómo puedes ayudarle hoy. "
-            f"Actúa como guía espiritual {religion}. Usuario dice: {user_msg} "
-            f"Incluye frases de bienvenida como '¡Hola!' o '¡Buenos días!' y '¿En qué puedo ayudarte hoy?' antes de responder cualquier contenido adicional."
-        )
+        prompt = f"""
+Actúa como guía espiritual y emocional. 
+1. Saluda al usuario antes de cualquier cosa y pregunta: "¿Cómo puedo ayudarte hoy?"
+2. No juzgues el mensaje del usuario.
+3. Si hay desacuerdo o tema conflictivo, conviértelo en un debate constructivo.
+4. Si el mensaje es ilegal, dañino o prohibido para la sociedad, evita mencionarlo directamente y redirige inteligentemente hacia lo positivo.
+5. Responde siempre en el idioma detectado.
+Usuario dice: {user_msg}
+"""
         response = model.generate_content(prompt)
         reply_text = response.text
     except Exception as e:
