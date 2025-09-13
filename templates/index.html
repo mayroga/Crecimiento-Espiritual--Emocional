@@ -3,82 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente May Roga</title>
+    <title>Crecimiento Espiritual-Emocional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .chat-container { max-width: 768px; height: 95vh; display: flex; flex-direction: column; margin: auto; }
+        .message { padding: 1rem; border-radius: 1rem; margin-bottom: 0.5rem; max-width: 80%; word-wrap: break-word; }
+        .audio-icon { cursor: pointer; margin-left: 0.5rem; width: 1.25rem; height: 1.25rem; display: inline-block; }
+    </style>
 </head>
-<body>
-    <h1>Respira y Sonríe</h1>
+<body class="bg-gray-100 flex flex-col items-center justify-center p-4 sm:p-6">
+<div class="chat-container bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col w-full">
+    <header class="bg-indigo-600 text-white p-4 text-center text-xl font-semibold rounded-t-2xl">
+        Crecimiento Espiritual-Emocional
+    </header>
 
-    <!-- Chat -->
-    <div>
-        <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
-        <button onclick="sendMessage()">Enviar</button>
-    </div>
-    <div id="chat-box"></div>
+    <div id="messages-container" class="flex-grow p-4 overflow-y-auto space-y-4"></div>
 
-    <!-- Donación -->
-    <div>
-        <input type="number" id="donation-amount" placeholder="Monto donación USD" min="0.5" step="0.01"/>
-        <button id="donate-button">Aporta lo que quieras</button>
-    </div>
-
-    <!-- Servicio -->
-    <div>
-        <input type="number" id="service-amount" placeholder="Monto servicio USD" min="1" step="0.01"/>
-        <button id="service-button">Paga tu servicio</button>
+    <div class="p-4 bg-gray-100 flex items-center rounded-b-2xl">
+        <input type="text" id="user-input" placeholder="Escribe tu mensaje..."
+               class="flex-grow p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 shadow-sm">
+        <button id="send-button" class="ml-2 bg-indigo-600 text-white p-3 rounded-xl hover:bg-indigo-700">
+            Enviar
+        </button>
     </div>
 
-    <script>
-        const stripe = Stripe("{{ key }}");
+    <div class="p-4 flex justify-around bg-gray-100">
+        <div>
+            <input type="number" id="donation-amount" placeholder="Monto donación USD" class="border p-1 rounded"/>
+            <button id="donate-button" class="bg-green-500 text-white p-2 rounded ml-1">Aporta lo que quieras</button>
+        </div>
+        <div>
+            <input type="number" id="service-amount" placeholder="Monto servicio USD" class="border p-1 rounded"/>
+            <button id="service-button" class="bg-blue-500 text-white p-2 rounded ml-1">Paga tu servicio</button>
+        </div>
+    </div>
+</div>
 
-        // Chat
-        async function sendMessage() {
-            const input = document.getElementById("user-input");
-            const message = input.value;
-            input.value = "";
+<script>
+const stripe = Stripe("{{ stripe_pub_key }}");
 
-            const res = await fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message })
-            });
-            const data = await res.json();
+function addMessage(text, sender, audioData=null){
+    const container = document.getElementById('messages-container');
+    const div = document.createElement('div'); div.classList.add('message');
+    div.textContent = text;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    if(audioData){
+        const audio = new Audio(`data:audio/mp3;base64,${audioData}`);
+        audio.play();
+    }
+}
 
-            const chatBox = document.getElementById("chat-box");
-            chatBox.innerHTML += `<p><b>Tú:</b> ${message}</p>`;
-            chatBox.innerHTML += `<p><b>Asistente:</b> ${data.reply}</p>`;
+async function sendMessage(){
+    const input = document.getElementById('user-input');
+    const msg = input.value.trim(); if(msg==='') return;
+    addMessage(msg, 'user'); input.value='';
 
-            if (data.audio) {
-                const audio = new Audio(data.audio);
-                audio.play();
-            }
-        }
+    const loading = document.createElement('div');
+    loading.textContent='Escribiendo...'; loading.classList.add('message');
+    document.getElementById('messages-container').appendChild(loading);
 
-        // Donación
-        document.getElementById('donate-button').addEventListener('click', async ()=>{
-            let amount = parseFloat(document.getElementById('donation-amount').value);
-            if(isNaN(amount) || amount < 0.5) amount = 0.5;
-            const res = await fetch("/create-donation-session",{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({amount})
-            });
-            const session = await res.json();
-            stripe.redirectToCheckout({sessionId: session.id});
-        });
+    try{
+        const res = await fetch("/chat",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+        const data = await res.json(); loading.remove();
+        addMessage(data.reply,'ai',data.audio);
+    }catch(e){ loading.remove(); addMessage('Error al procesar tu solicitud.','ai'); }
+}
 
-        // Servicio
-        document.getElementById('service-button').addEventListener('click', async ()=>{
-            let amount = parseFloat(document.getElementById('service-amount').value);
-            if(isNaN(amount) || amount < 1) amount = 1;
-            const res = await fetch("/create-service-session",{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({amount})
-            });
-            const session = await res.json();
-            stripe.redirectToCheckout({sessionId: session.id});
-        });
-    </script>
+document.getElementById('send-button').addEventListener('click', sendMessage);
+document.getElementById('user-input').addEventListener('keypress', e=>{if(e.key==='Enter') sendMessage();});
+
+window.onload = ()=>{addMessage('¡Hola! Soy tu guía espiritual y emocional. ¿En qué puedo ayudarte hoy?', 'ai');}
+
+// Donación
+document.getElementById('donate-button').addEventListener('click', async ()=>{
+    let amount = document.getElementById('donation-amount').value;
+    const res = await fetch("/create-donation-session",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount})});
+    const session = await res.json(); stripe.redirectToCheckout({sessionId: session.id});
+});
+
+// Servicio
+document.getElementById('service-button').addEventListener('click', async ()=>{
+    let amount = document.getElementById('service-amount').value;
+    const res = await fetch("/create-service-session",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount})});
+    const session = await res.json(); stripe.redirectToCheckout({sessionId: session.id});
+});
+</script>
 </body>
 </html>
