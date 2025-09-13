@@ -1,99 +1,117 @@
 from flask import Flask, render_template, request, jsonify
-import os
-import google.generativeai as genai
-from langdetect import detect
-from gtts import gTTS
-import base64
-from io import BytesIO
 from flask_cors import CORS
 import stripe
+import os
+import google.generativeai as genai
+from gtts import gTTS
+from langdetect import detect
+import tempfile
 
 app = Flask(__name__)
 CORS(app)
 
-# Configura tu API Key de Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# Configuración Stripe
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "sk_test_REEMPLAZA_CON_TU_KEY")
+PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY", "pk_live_51NqPxQBOA5mT4t0PEoRVRc0Sj7DugiHvxhozC3BYh0q0hAx1N3HCLJe4xEp3MSuNMA6mQ7fAO4mvtppqLodrtqEn00pgJNQaxz")
 
-# Configura Stripe
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+# Configuración Google Generative AI
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY", "AIzaSyDUMMY-KEY"))
 
+# Página principal
 @app.route("/")
-def home():
-    return render_template("index.html", title="Crecimiento Espiritual-Emocional")
+def index():
+    return render_template("index.html", key=PUBLISHABLE_KEY)
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    user_msg = request.json.get("message")
-    if not user_msg:
-        return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
-
-    # Detecta idioma
-    try:
-        idioma = detect(user_msg)
-    except:
-        idioma = "es"
-
-    # Detección básica de religión
-    lower_msg = user_msg.lower()
-    if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
-        religion = "cristianismo"
-    elif any(x in lower_msg for x in ["musulmán", "islam", "mezquita"]):
-        religion = "islam"
-    elif any(x in lower_msg for x in ["budista", "buda", "templo"]):
-        religion = "budismo"
-    elif any(x in lower_msg for x in ["judío", "sinagoga", "judaísmo"]):
-        religion = "judaísmo"
-    else:
-        religion = "universal"
-
-    # Generación de respuesta con Gemini IA
-    try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"Saluda primero al usuario y ofrece ayuda espiritual antes de responder. Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
-        response = model.generate_content(prompt)
-        reply_text = response.text
-    except Exception as e:
-        print(f"Error al llamar a la API de Gemini: {e}")
-        reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
-
-    # Convertir texto a voz (TTS)
-    tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
-    try:
-        tts = gTTS(text=reply_text, lang=tts_lang)
-        mp3_fp = BytesIO()
-        tts.write_to_fp(mp3_fp)
-        mp3_fp.seek(0)
-        audio_base64 = base64.b64encode(mp3_fp.read()).decode('utf-8')
-    except Exception as e:
-        print(f"Error al generar el audio: {e}")
-        audio_base64 = ""
-
-    return jsonify({"reply": reply_text, "audio": audio_base64})
-
+# Endpoint Stripe: Donaciones con validación
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
-    data = request.json
-    amount = int(float(data["amount"]) * 100)  # convertir a centavos
-
     try:
+        data = request.json
+        amount = int(float(data.get("amount", 0)) * 100)  # convertir a centavos USD
+        if amount < 50:  # mínimo $0.50
+            amount = 50
+
         session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
+            payment_method_types=['card'],
+            mode='payment',
             line_items=[{
-                "price_data": {
-                    "currency": "usd",
-                    "product_data": {"name": "Donación a May Roga LLC"},
-                    "unit_amount": amount,
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {'name': 'Donación abierta'},
+                    'unit_amount': amount,
                 },
-                "quantity": 1,
+                'quantity': 1,
             }],
-            mode="payment",
-            success_url="https://tuweb.com/gracias",  # Cambia a tu URL
-            cancel_url="https://tuweb.com/cancelado", # Cambia a tu URL
+            success_url="https://tu-dominio.com/success",
+            cancel_url="https://tu-dominio.com/cancel",
         )
-        return jsonify({"url": session.url})
+        return jsonify({'id': session.id})
     except Exception as e:
-        return jsonify(error=str(e)), 400
+        return jsonify(error=str(e)), 403
+
+# Endpoint Stripe: Pago de servicio con validación
+@app.route("/create-service-session", methods=["POST"])
+def create_service_session():
+    try:
+        data = request.json
+        amount = int(float(data.get("amount", 0)) * 100)  # centavos USD
+        if amount < 100:  # mínimo $1
+            amount = 100
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            mode='payment',
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {'name': 'Servicio de Risoterapia'},
+                    'unit_amount': amount,
+                },
+                'quantity': 1,
+            }],
+            success_url="https://tu-dominio.com/success",
+            cancel_url="https://tu-dominio.com/cancel",
+        )
+        return jsonify({'id': session.id})
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+# Endpoint Chat IA + TTS
+@app.route("/chat", methods=["POST"])
+def chat():
+    try:
+        data = request.json
+        message = data.get("message", "")
+
+        # IA: no juzgar, no discutir, solo guiar al bien o evitar lo dañino inteligentemente
+        prompt = f"""
+        Actúa como un asistente de risoterapia y bienestar natural.
+        - Nunca juzgues ni discutas con el cliente.
+        - Si el tema es negativo, conviértelo en un debate hacia el bien.
+        - Si es algo prohibido o dañino, evítalo inteligentemente, sin que sea notado.
+        - Siempre responde de forma breve, clara y positiva.
+        Usuario: {message}
+        """
+
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        reply = response.text.strip()
+
+        # Detectar idioma
+        lang = "es"
+        try:
+            lang = detect(reply)
+        except:
+            pass
+
+        # Generar TTS
+        tts = gTTS(reply, lang=lang)
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+        tts.save(temp_file.name)
+
+        return jsonify({"reply": reply, "audio": temp_file.name})
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
