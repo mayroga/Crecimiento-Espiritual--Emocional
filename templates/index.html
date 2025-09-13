@@ -121,7 +121,7 @@
             });
             const data = await res.json();
             if (data.url) {
-                window.location.href = data.url;
+                window.open(data.url, '_blank'); // Abrir Stripe en nueva pestaña
             } else {
                 alert('Error al crear la sesión de donación: ' + data.error);
             }
@@ -134,7 +134,7 @@
             });
             const data = await res.json();
             if (data.url) {
-                window.location.href = data.url;
+                window.open(data.url, '_blank'); // Abrir Stripe en nueva pestaña
             } else {
                 alert('Error al crear la sesión de pago de servicio: ' + data.error);
             }
