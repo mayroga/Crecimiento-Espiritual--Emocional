@@ -85,7 +85,19 @@ def chat():
         print(f"Error al llamar a la API de IA: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    tts_lang = idioma[:2] if idioma[:2] in ["es", "en", "fr", "de", "it", "pt"] else "es"
+    # =======================================================
+    # Generación de audio con gTTS (voz clara según idioma detectado)
+    # =======================================================
+    gtts_map = {
+        "es": "es",  # español neutro
+        "en": "en",
+        "fr": "fr",
+        "de": "de",
+        "it": "it",
+        "pt": "pt"
+    }
+    tts_lang = gtts_map.get(idioma[:2], "es")  # siempre idioma válido para gTTS
+
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
         mp3_fp = BytesIO()
