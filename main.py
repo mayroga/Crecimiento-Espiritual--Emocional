@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify 
+from flask import Flask, render_template, request, jsonify
 import os
 import google.generativeai as genai
 import openai
@@ -80,19 +80,23 @@ def chat():
 
     # Generar respuesta de IA
     try:
-        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
+        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. Responde siempre de forma amable y cálida en el idioma del usuario. El tema principal es el crecimiento espiritual {religion}."
+        
+        # Añadir una instrucción explícita para que la IA responda en el idioma detectado
+        explicit_user_prompt = f"{user_msg} Por favor, responde en {idioma}."
+        
         if USE_OPENAI:
             response = openai.chat.completions.create(
                 model="gpt-4o",
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_msg}
+                    {"role": "user", "content": explicit_user_prompt}
                 ]
             )
             reply_text = response.choices[0].message.content
         else:
             model = genai.GenerativeModel('gemini-1.5-flash')
-            prompt = f"{system_prompt} Usuario dice: {user_msg}"
+            prompt = f"{system_prompt} Usuario dice: {explicit_user_prompt}"
             response = model.generate_content(prompt)
             reply_text = response.text
     except Exception as e:
