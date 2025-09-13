@@ -10,14 +10,15 @@ from flask_cors import CORS
 import stripe
 
 app = Flask(__name__)
-CORS(app)
+# Permite que Google Sites hable con tu servidor
+CORS(app, origins=["https://sites.google.com"])
 
 # =======================================================
 # CONFIGURACIONES DE API
 # =======================================================
 
 # Elige el modelo de IA a usar: True para OpenAI, False para Gemini
-USE_OPENAI = True 
+USE_OPENAI = True
 
 # Configura OpenAI (requiere tu clave de entorno OPENAI_API_KEY)
 if USE_OPENAI:
