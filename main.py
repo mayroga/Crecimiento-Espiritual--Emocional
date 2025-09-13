@@ -10,35 +10,38 @@ from flask_cors import CORS
 import stripe
 
 app = Flask(__name__)
+# =======================================================
+# CORS: autorización específica para Google Sites, Stripe, OpenAI, Gemini y Render
+# =======================================================
+URL_SITE = "https://crecimiento-espiritual-emocional.onrender.com"
 CORS(app, origins=[
-    "https://sites.google.com/view/felicidad/",     # Google Site
-    "https://checkout.stripe.com",                  # Stripe Checkout
-    "https://api.openai.com",                       # OpenAI
-    "https://gemini.googleapis.com",               # Gemini
-    "https://crecimiento-espiritual-emocional.onrender.com"  # Render
+    "https://sites.google.com/view/felicidad/",  # Google Site
+    "https://checkout.stripe.com",               # Stripe Checkout
+    "https://api.openai.com",                    # OpenAI
+    "https://gemini.googleapis.com",            # Gemini
+    URL_SITE                                     # Render
 ])
 
 # =======================================================
 # CONFIGURACIONES DE API
 # =======================================================
 
-# Elige el modelo de IA a usar: True para OpenAI, False para Gemini
 USE_OPENAI = True
 
-# Configura OpenAI (requiere tu clave de entorno OPENAI_API_KEY)
 if USE_OPENAI:
     openai.api_key = os.getenv("OPENAI_API_KEY")
 else:
-    # Configura Gemini (requiere tu clave de entorno GEMINI_API_KEY)
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-# Configura Stripe
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route("/")
 def home():
     return render_template("index.html", stripe_pub_key=os.getenv("STRIPE_PUBLISHABLE_KEY"))
 
+# =======================================================
+# RUTAS DE CHAT Y TTS
+# =======================================================
 @app.route("/chat", methods=["POST"])
 def chat():
     user_msg = request.json.get("message")
@@ -62,12 +65,8 @@ def chat():
     else:
         religion = "universal"
 
-    # =======================================================
-    # GENERACIÓN DE RESPUESTA CON AI (OpenAI o Gemini)
-    # =======================================================
     try:
-        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. No hables de ningún otro tema. Si el usuario menciona algo que no sea espiritual, redirige la conversación sutilmente a temas de crecimiento personal o espiritualidad, sin juzgar ni regañar. De manera sutil y amigable, recuérdale al cliente que las donaciones son necesarias para el mantenimiento del servicio, pagos a trabajadores y obras benéficas. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
-
+        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
         if USE_OPENAI:
             response = openai.chat.completions.create(
                 model="gpt-4o",
@@ -86,7 +85,6 @@ def chat():
         print(f"Error al llamar a la API de IA: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    # Convierte el texto a voz (TTS)
     tts_lang = idioma[:2] if idioma[:2] in ["es", "en", "fr", "de", "it", "pt"] else "es"
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
@@ -103,7 +101,6 @@ def chat():
 # =======================================================
 # ENDPOINTS DE PAGO CON STRIPE
 # =======================================================
-
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
     try:
@@ -139,7 +136,7 @@ def create_service_session():
                 "price_data": {
                     "currency": "usd",
                     "product_data": {"name": "Servicio de Crecimiento Emocional"},
-                    "unit_amount": 1000, # Monto fijo de $10.00
+                    "unit_amount": 1000,
                 },
                 "quantity": 1,
             }],
