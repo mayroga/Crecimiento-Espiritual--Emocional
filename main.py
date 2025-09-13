@@ -60,7 +60,7 @@ def chat():
     # GENERACIÓN DE RESPUESTA CON AI (OpenAI o Gemini)
     # =======================================================
     try:
-        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. No hables de ningún otro tema. Si el usuario menciona algo que no sea espiritual, redirige la conversación sutilmente a temas de crecimiento personal o espiritualidad, sin juzgar ni regañar. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
+        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. No hables de ningún otro tema. Si el usuario menciona algo que no sea espiritual, redirige la conversación sutilmente a temas de crecimiento personal o espiritualidad, sin juzgar ni regañar. De manera sutil y amigable, recuérdale al cliente que las donaciones son necesarias para el mantenimiento del servicio, pagos a trabajadores y obras benéficas. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
 
         if USE_OPENAI:
             response = openai.chat.completions.create(
@@ -95,7 +95,7 @@ def chat():
     return jsonify({"reply": reply_text, "audio": audio_base64})
 
 # =======================================================
-# ENDPOINTS DE PAGO CON STRIPE (SOLO DONACIÓN)
+# ENDPOINTS DE PAGO CON STRIPE
 # =======================================================
 
 @app.route("/create-donation-session", methods=["POST"])
@@ -113,6 +113,27 @@ def create_donation_session():
                     "currency": "usd",
                     "product_data": {"name": "Donación a May Roga LLC"},
                     "unit_amount": amount_cents,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url="https://tuweb.com/gracias",
+            cancel_url="https://tuweb.com/cancelado",
+        )
+        return jsonify({"url": session.url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/create-service-session", methods=["POST"])
+def create_service_session():
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": "Servicio de Crecimiento Emocional"},
+                    "unit_amount": 1000, # Monto fijo de $10.00
                 },
                 "quantity": 1,
             }],
