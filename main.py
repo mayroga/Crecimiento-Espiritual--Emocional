@@ -23,11 +23,13 @@ def chat():
     if not user_msg:
         return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
 
+    # Detecta idioma
     try:
         idioma = detect(user_msg)
     except:
         idioma = "es"
 
+    # Detección básica de religión
     lower_msg = user_msg.lower()
     if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
         religion = "cristianismo"
@@ -40,17 +42,23 @@ def chat():
     else:
         religion = "universal"
 
-    # Llamada a Gemini
+    # Generación de respuesta con Gemini IA
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
+        # FORZAR idioma y saludo inicial
+        prompt = (
+            f"RESPONDE SOLO EN {idioma.upper()} y NUNCA CAMBIES DE IDIOMA. "
+            f"Primero saluda al usuario cordialmente y luego pregunta cómo puedes ayudarle hoy. "
+            f"Actúa como guía espiritual {religion}. Usuario dice: {user_msg} "
+            f"Incluye frases de bienvenida como '¡Hola!' o '¡Buenos días!' y '¿En qué puedo ayudarte hoy?' antes de responder cualquier contenido adicional."
+        )
         response = model.generate_content(prompt)
         reply_text = response.text
     except Exception as e:
         print(f"Error al llamar a la API de Gemini: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    # Texto a voz
+    # Convertir texto a voz (TTS)
     tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
