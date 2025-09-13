@@ -134,6 +134,11 @@
     <div class="container">
         <!-- Sección de pagos siempre visible -->
         <div class="payment-section">
+            <!-- Recordatorio sutil de donación -->
+            <div class="bg-yellow-100 text-yellow-900 p-2 rounded text-sm text-center mb-2">
+                Recuerda que tu donación ayuda a pagar sueldos, alimentos, shelter y mantener el servicio.
+            </div>
+
             <input type="number" id="donation-amount" placeholder="Monto donación USD" min="4.99" step="0.01">
             <button id="donate-button" class="payment-button donate-btn">Aporta lo que quieras</button>
             <button id="service-button" class="payment-button service-btn">Paga tu servicio ($10.00)</button>
@@ -226,6 +231,33 @@
             const data = await res.json();
             if (data.url) { window.open(data.url, '_blank'); } else { alert('Error: ' + data.error); }
         });
+
+        // =======================================================
+        // Sesión limitada a 10 minutos
+        // =======================================================
+        let sessionTimeout = null;
+
+        function startSessionTimer() {
+            if (sessionTimeout) clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(() => {
+                const messagesContainer = document.getElementById('messages-container');
+                messagesContainer.innerHTML = '';
+                addMessage('La sesión ha terminado. Por favor, inicia una nueva conversación.', 'ai');
+
+                // Reiniciar temporizador automáticamente
+                startSessionTimer();
+            }, 600000); // 10 minutos
+        }
+
+        // Iniciar temporizador al cargar página
+        startSessionTimer();
+
+        // Reiniciar temporizador con cada interacción
+        document.getElementById('send-button').addEventListener('click', () => startSessionTimer());
+        document.getElementById('user-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') startSessionTimer();
+        });
+
     </script>
 
 </body>
