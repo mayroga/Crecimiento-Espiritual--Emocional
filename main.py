@@ -6,12 +6,16 @@ from gtts import gTTS
 import base64
 from io import BytesIO
 from flask_cors import CORS
+import stripe
 
 app = Flask(__name__)
 CORS(app)
 
 # Configura tu API Key de Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+# Configura Stripe
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route("/")
 def home():
@@ -45,15 +49,7 @@ def chat():
     # Generación de respuesta con Gemini IA
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"""
-Actúa como guía espiritual y emocional. 
-1. Saluda al usuario antes de cualquier cosa y pregunta: "¿Cómo puedo ayudarte hoy?"
-2. No juzgues el mensaje del usuario.
-3. Si hay desacuerdo o tema conflictivo, conviértelo en un debate constructivo.
-4. Si el mensaje es ilegal, dañino o prohibido para la sociedad, evita mencionarlo directamente y redirige inteligentemente hacia lo positivo.
-5. Responde siempre en el idioma detectado.
-Usuario dice: {user_msg}
-"""
+        prompt = f"Saluda primero al usuario y ofrece ayuda espiritual antes de responder. Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
         response = model.generate_content(prompt)
         reply_text = response.text
     except Exception as e:
@@ -73,6 +69,30 @@ Usuario dice: {user_msg}
         audio_base64 = ""
 
     return jsonify({"reply": reply_text, "audio": audio_base64})
+
+@app.route("/create-donation-session", methods=["POST"])
+def create_donation_session():
+    data = request.json
+    amount = int(float(data["amount"]) * 100)  # convertir a centavos
+
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": "Donación a May Roga LLC"},
+                    "unit_amount": amount,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url="https://tuweb.com/gracias",  # Cambia a tu URL
+            cancel_url="https://tuweb.com/cancelado", # Cambia a tu URL
+        )
+        return jsonify({"url": session.url})
+    except Exception as e:
+        return jsonify(error=str(e)), 400
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
