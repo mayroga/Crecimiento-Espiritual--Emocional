@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import os
 import google.generativeai as genai
+import openai
 from langdetect import detect
 from gtts import gTTS
 import base64
@@ -11,15 +12,26 @@ import stripe
 app = Flask(__name__)
 CORS(app)
 
-# Configura tu API Key de Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# =======================================================
+# CONFIGURACIONES DE API
+# =======================================================
+
+# Elige el modelo de IA a usar: True para OpenAI, False para Gemini
+USE_OPENAI = True 
+
+# Configura OpenAI (requiere tu clave de entorno OPENAI_API_KEY)
+if USE_OPENAI:
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+else:
+    # Configura Gemini (requiere tu clave de entorno GEMINI_API_KEY)
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Configura Stripe
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route("/")
 def home():
-    return render_template("index.html", title="Crecimiento Espiritual-Emocional")
+    return render_template("index.html", stripe_pub_key=os.getenv("STRIPE_PUBLISHABLE_KEY"))
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -27,13 +39,11 @@ def chat():
     if not user_msg:
         return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
 
-    # Detecta idioma
     try:
         idioma = detect(user_msg)
     except:
         idioma = "es"
 
-    # Detección básica de religión
     lower_msg = user_msg.lower()
     if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
         religion = "cristianismo"
@@ -46,18 +56,32 @@ def chat():
     else:
         religion = "universal"
 
-    # Generación de respuesta con Gemini IA
+    # =======================================================
+    # GENERACIÓN DE RESPUESTA CON AI (OpenAI o Gemini)
+    # =======================================================
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        prompt = f"Saluda primero al usuario y ofrece ayuda espiritual antes de responder. Actúa como guía espiritual {religion}. Responde en {idioma}. Usuario dice: {user_msg}"
-        response = model.generate_content(prompt)
-        reply_text = response.text
+        if USE_OPENAI:
+            # Llama a la API de OpenAI
+            response = openai.chat.completions.create(
+                model="gpt-4o",  # O "gpt-3.5-turbo" para menor costo
+                messages=[
+                    {"role": "system", "content": f"Eres un guía espiritual {religion} amable y universal. Responde de forma cálida y en {idioma}. Tu nombre es 'Sabio'."},
+                    {"role": "user", "content": user_msg}
+                ]
+            )
+            reply_text = response.choices[0].message.content
+        else:
+            # Llama a la API de Gemini
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            prompt = f"Actúa como un guía espiritual {religion} amable y universal. Responde de forma cálida y en {idioma}. Usuario dice: {user_msg}"
+            response = model.generate_content(prompt)
+            reply_text = response.text
     except Exception as e:
-        print(f"Error al llamar a la API de Gemini: {e}")
+        print(f"Error al llamar a la API de IA: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    # Convertir texto a voz (TTS)
-    tts_lang = idioma[:2] if idioma[:2] in ["es","en","fr","de","it","pt"] else "es"
+    # Convierte el texto a voz (TTS)
+    tts_lang = idioma[:2] if idioma[:2] in ["es", "en", "fr", "de", "it", "pt"] else "es"
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
         mp3_fp = BytesIO()
@@ -70,22 +94,50 @@ def chat():
 
     return jsonify({"reply": reply_text, "audio": audio_base64})
 
+# =======================================================
+# ENDPOINTS DE PAGO CON STRIPE
+# =======================================================
+
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
-    data = request.json
-    amount = float(data.get("amount", 0))
-    if amount < 4.99:
-        return jsonify({"error": "La donación mínima es $4.99"}), 400
-
-    amount_cents = int(amount * 100)
-
     try:
+        data = request.json
+        amount = float(data.get("amount", 0))
+        if amount < 4.99:
+            return jsonify({"error": "La donación mínima es $4.99"}), 400
+        amount_cents = int(amount * 100)
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[{
                 "price_data": {
                     "currency": "usd",
                     "product_data": {"name": "Donación a May Roga LLC"},
+                    "unit_amount": amount_cents,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url="https://tuweb.com/gracias",
+            cancel_url="https://tuweb.com/cancelado",
+        )
+        return jsonify({"url": session.url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/create-service-session", methods=["POST"])
+def create_service_session():
+    try:
+        data = request.json
+        amount = float(data.get("amount", 0))
+        if amount < 10.00:
+            return jsonify({"error": "El monto mínimo para un servicio es $10.00"}), 400
+        amount_cents = int(amount * 100)
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {"name": "Servicio de Crecimiento Emocional"},
                     "unit_amount": amount_cents,
                 },
                 "quantity": 1,
