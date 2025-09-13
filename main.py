@@ -60,20 +60,21 @@ def chat():
     # GENERACIÓN DE RESPUESTA CON AI (OpenAI o Gemini)
     # =======================================================
     try:
+        # Prompt modificado para que el asistente se mantenga en el tema
+        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. No hables de ningún otro tema. Si el usuario menciona algo que no sea espiritual, redirige la conversación sutilmente a temas de crecimiento personal o espiritualidad, sin juzgar ni regañar. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
+
         if USE_OPENAI:
-            # Llama a la API de OpenAI
             response = openai.chat.completions.create(
-                model="gpt-4o",  # O "gpt-3.5-turbo" para menor costo
+                model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": f"Eres un guía espiritual {religion} amable y universal. Responde de forma cálida y en {idioma}. Tu nombre es 'Sabio'."},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_msg}
                 ]
             )
             reply_text = response.choices[0].message.content
         else:
-            # Llama a la API de Gemini
             model = genai.GenerativeModel('gemini-1.5-flash')
-            prompt = f"Actúa como un guía espiritual {religion} amable y universal. Responde de forma cálida y en {idioma}. Usuario dice: {user_msg}"
+            prompt = f"{system_prompt} Usuario dice: {user_msg}"
             response = model.generate_content(prompt)
             reply_text = response.text
     except Exception as e:
