@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crecimiento Espiritual-Emocional</title>
+    <title>Dios está Contigo - Bendiciones</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
@@ -12,7 +12,7 @@
         .container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh; /* ✅ Garantiza scroll completo en móvil */
             width: 100%;
             max-width: 768px;
             margin: auto;
@@ -123,7 +123,7 @@
         }
 
         @media (max-width: 500px) {
-            .container { height: 100vh; width: 100vw; border-radius: 0; }
+            .container { width: 100vw; border-radius: 0; }
             .chat-input-section { flex-direction: column; }
             .chat-input-section input, .chat-input-section button { width: 100%; }
         }
@@ -132,24 +132,25 @@
 <body>
 
     <div class="container">
-        <!-- Sección de pagos siempre visible -->
-        <div class="payment-section">
-            <!-- Recordatorio sutil de donación -->
-            <div class="bg-yellow-100 text-yellow-900 p-2 rounded text-sm text-center mb-2">
-                Recuerda que tu donación ayuda a pagar sueldos, alimentos, shelter y mantener el servicio.
-            </div>
+        <!-- ✅ Título siempre arriba -->
+        <header class="bg-indigo-600 text-white p-4 text-center text-xl font-semibold rounded-t-2xl">
+            Dios está Contigo - Bendiciones
+        </header>
 
+        <!-- Sección de pagos -->
+        <div class="payment-section">
             <input type="number" id="donation-amount" placeholder="Monto donación USD" min="4.99" step="0.01">
             <button id="donate-button" class="payment-button donate-btn">Aporta lo que quieras</button>
             <button id="service-button" class="payment-button service-btn">Paga tu servicio ($10.00)</button>
+
+            <!-- ✅ Recordatorio al final -->
+            <div class="bg-yellow-100 text-yellow-900 p-2 rounded text-sm text-center mt-2">
+                Recuerda que tu donación ayuda a pagar sueldos, alimentos, shelter y mantener el servicio.
+            </div>
         </div>
 
         <!-- Chat scrollable -->
         <div class="chat-container">
-            <header class="bg-indigo-600 text-white p-4 text-center text-xl font-semibold rounded-t-2xl">
-                Crecimiento Espiritual-Emocional
-            </header>
-
             <div id="messages-container"></div>
 
             <div class="chat-input-section">
@@ -175,7 +176,7 @@
                 const audio = new Audio(`data:audio/mp3;base64,${audioData}`);
                 const audioIcon = document.createElement('span');
                 audioIcon.classList.add('audio-icon');
-                audioIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 inline-block text-gray-500 ml-2">
+                audioIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 inline-block text-gray-500 ml-2" viewBox="0 0 24 24">
                                             <path d="M13.5 4.5a1.5 1.5 0 0 0-1.5 1.5V18a1.5 1.5 0 0 0 3 0V6a1.5 1.5 0 0 0-1.5-1.5ZM6 4.5a1.5 1.5 0 0 0-1.5 1.5V18a1.5 1.5 0 0 0 3 0V6a1.5 1.5 0 0 0-1.5-1.5Z" />
                                         </svg>`;
                 messageDiv.appendChild(audioIcon);
@@ -243,16 +244,12 @@
                 const messagesContainer = document.getElementById('messages-container');
                 messagesContainer.innerHTML = '';
                 addMessage('La sesión ha terminado. Por favor, inicia una nueva conversación.', 'ai');
-
-                // Reiniciar temporizador automáticamente
                 startSessionTimer();
             }, 600000); // 10 minutos
         }
 
-        // Iniciar temporizador al cargar página
         startSessionTimer();
 
-        // Reiniciar temporizador con cada interacción
         document.getElementById('send-button').addEventListener('click', () => startSessionTimer());
         document.getElementById('user-input').addEventListener('keypress', e => {
             if (e.key === 'Enter') startSessionTimer();
