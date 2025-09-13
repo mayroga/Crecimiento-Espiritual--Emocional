@@ -10,15 +10,12 @@ from flask_cors import CORS
 import stripe
 
 app = Flask(__name__)
-
-# =======================================================
-# AUTORIZACIÓN CORS ESPECÍFICA
-# =======================================================
 CORS(app, origins=[
-    "https://sites.google.com/view/felicidad/",  # tu Google Site exacto
-    "https://checkout.stripe.com",               # Stripe Checkout
-    "https://api.openai.com",                    # OpenAI
-    "https://gemini.googleapis.com"              # Gemini
+    "https://sites.google.com/view/felicidad/",     # Google Site
+    "https://checkout.stripe.com",                  # Stripe Checkout
+    "https://api.openai.com",                       # OpenAI
+    "https://gemini.googleapis.com",               # Gemini
+    "https://crecimiento-espiritual-emocional.onrender.com"  # Render
 ])
 
 # =======================================================
@@ -65,6 +62,9 @@ def chat():
     else:
         religion = "universal"
 
+    # =======================================================
+    # GENERACIÓN DE RESPUESTA CON AI (OpenAI o Gemini)
+    # =======================================================
     try:
         system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. No hables de ningún otro tema. Si el usuario menciona algo que no sea espiritual, redirige la conversación sutilmente a temas de crecimiento personal o espiritualidad, sin juzgar ni regañar. De manera sutil y amigable, recuérdale al cliente que las donaciones son necesarias para el mantenimiento del servicio, pagos a trabajadores y obras benéficas. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
 
@@ -86,6 +86,7 @@ def chat():
         print(f"Error al llamar a la API de IA: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
+    # Convierte el texto a voz (TTS)
     tts_lang = idioma[:2] if idioma[:2] in ["es", "en", "fr", "de", "it", "pt"] else "es"
     try:
         tts = gTTS(text=reply_text, lang=tts_lang)
@@ -98,6 +99,10 @@ def chat():
         audio_base64 = ""
 
     return jsonify({"reply": reply_text, "audio": audio_base64})
+
+# =======================================================
+# ENDPOINTS DE PAGO CON STRIPE
+# =======================================================
 
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
