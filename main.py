@@ -10,22 +10,22 @@ from flask_cors import CORS
 import stripe
 
 app = Flask(__name__)
+
 # =======================================================
 # CORS: autorización específica para Google Sites, Stripe, OpenAI, Gemini y Render
 # =======================================================
 URL_SITE = "https://crecimiento-espiritual-emocional.onrender.com"
 CORS(app, origins=[
-    "https://sites.google.com/view/felicidad/",  # Google Site
-    "https://checkout.stripe.com",               # Stripe Checkout
-    "https://api.openai.com",                    # OpenAI
-    "https://gemini.googleapis.com",            # Gemini
-    URL_SITE                                     # Render
+    "https://sites.google.com/view/felicidad/",
+    "https://checkout.stripe.com",
+    "https://api.openai.com",
+    "https://gemini.googleapis.com",
+    URL_SITE
 ])
 
 # =======================================================
 # CONFIGURACIONES DE API
 # =======================================================
-
 USE_OPENAI = True
 
 if USE_OPENAI:
@@ -48,11 +48,24 @@ def chat():
     if not user_msg:
         return jsonify({"reply": "Por favor escribe algo.", "audio": ""})
 
+    # Detectar idioma automáticamente
     try:
-        idioma = detect(user_msg)
+        idioma_detectado = detect(user_msg)
     except:
-        idioma = "es"
+        idioma_detectado = "es"
 
+    # Validar idioma para gTTS
+    gtts_map = {
+        "es": "es",
+        "en": "en",
+        "fr": "fr",
+        "de": "de",
+        "it": "it",
+        "pt": "pt"
+    }
+    idioma = gtts_map.get(idioma_detectado[:2], "es")
+
+    # Detectar religión según palabras clave
     lower_msg = user_msg.lower()
     if any(x in lower_msg for x in ["cristiano", "iglesia", "jesús"]):
         religion = "cristianismo"
@@ -65,6 +78,7 @@ def chat():
     else:
         religion = "universal"
 
+    # Generar respuesta de IA
     try:
         system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. Responde siempre de forma amable y cálida en {idioma}. El tema principal es el crecimiento espiritual {religion}."
         if USE_OPENAI:
@@ -85,21 +99,9 @@ def chat():
         print(f"Error al llamar a la API de IA: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
-    # =======================================================
-    # Generación de audio con gTTS (voz clara según idioma detectado)
-    # =======================================================
-    gtts_map = {
-        "es": "es",  # español neutro
-        "en": "en",
-        "fr": "fr",
-        "de": "de",
-        "it": "it",
-        "pt": "pt"
-    }
-    tts_lang = gtts_map.get(idioma[:2], "es")  # siempre idioma válido para gTTS
-
+    # Generación de audio con gTTS
     try:
-        tts = gTTS(text=reply_text, lang=tts_lang)
+        tts = gTTS(text=reply_text, lang=idioma)
         mp3_fp = BytesIO()
         tts.write_to_fp(mp3_fp)
         mp3_fp.seek(0)
