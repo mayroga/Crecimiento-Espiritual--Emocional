@@ -73,7 +73,11 @@ def chat():
 @app.route("/create-donation-session", methods=["POST"])
 def create_donation_session():
     data = request.json
-    amount = int(float(data["amount"]) * 100)  # convertir a centavos
+    amount = float(data.get("amount", 0))
+    if amount < 4.99:
+        return jsonify({"error": "La donación mínima es $4.99"}), 400
+
+    amount_cents = int(amount * 100)
 
     try:
         session = stripe.checkout.Session.create(
@@ -82,17 +86,17 @@ def create_donation_session():
                 "price_data": {
                     "currency": "usd",
                     "product_data": {"name": "Donación a May Roga LLC"},
-                    "unit_amount": amount,
+                    "unit_amount": amount_cents,
                 },
                 "quantity": 1,
             }],
             mode="payment",
-            success_url="https://tuweb.com/gracias",  # Cambia a tu URL
-            cancel_url="https://tuweb.com/cancelado", # Cambia a tu URL
+            success_url="https://tuweb.com/gracias",
+            cancel_url="https://tuweb.com/cancelado",
         )
         return jsonify({"url": session.url})
     except Exception as e:
-        return jsonify(error=str(e)), 400
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
