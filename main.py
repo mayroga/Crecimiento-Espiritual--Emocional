@@ -30,8 +30,7 @@ USE_OPENAI = False  # <--- CAMBIADO A FALSE PARA USAR GEMINI
 if USE_OPENAI:
     openai.api_key = os.getenv("OPENAI_API_KEY")
 else:
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
+   client = genai.Client(api_key=os.getenv("GEMINI_API_KEY")) 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route("/")
