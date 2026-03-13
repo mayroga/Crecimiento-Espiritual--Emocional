@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import os
-import google.generativeai as genai
-import openai
+from google import genai  # Nueva librería oficial
 from langdetect import detect
 from gtts import gTTS
 import base64
