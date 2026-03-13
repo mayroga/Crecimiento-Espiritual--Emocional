@@ -80,10 +80,8 @@ def chat():
 
     # Generar respuesta de IA
     try:
-        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu único propósito es ayudar al usuario a encontrar paz y propósito a través de la religión o el crecimiento espiritual. Responde siempre de forma amable y cálida en el idioma del usuario. El tema principal es el crecimiento espiritual {religion}."
-        
-        # Añadir una instrucción explícita para que la IA responda en el idioma detectado
-        explicit_user_prompt = f"{user_msg} Por favor, responde en {idioma}."
+        system_prompt = f"Eres un guía espiritual de crecimiento emocional. Tu propósito es ayudar al usuario a encontrar paz. Responde de forma amable en el idioma del usuario. El tema es {religion}."
+        explicit_user_prompt = f"{user_msg}. Responde en {idioma}."
         
         if USE_OPENAI:
             response = openai.chat.completions.create(
@@ -95,12 +93,17 @@ def chat():
             )
             reply_text = response.choices[0].message.content
         else:
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            prompt = f"{system_prompt} Usuario dice: {explicit_user_prompt}"
-            response = model.generate_content(prompt)
+            # CORRECCIÓN PARA GEMINI: Usamos system_instruction para mayor estabilidad
+            model = genai.GenerativeModel(
+                model_name='gemini-1.5-flash',
+                system_instruction=system_prompt
+            )
+            response = model.generate_content(explicit_user_prompt)
             reply_text = response.text
+            
     except Exception as e:
-        print(f"Error al llamar a la API de IA: {e}")
+        # Esto imprimirá el error real en los logs de Render para que sepas qué falla
+        print(f"DEBUG ERROR: {e}")
         reply_text = "Lo siento, hubo un problema al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
 
     # Generación de audio con gTTS
