@@ -26,7 +26,7 @@ CORS(app, origins=[
 # =======================================================
 # CONFIGURACIONES DE API
 # =======================================================
-USE_OPENAI = True
+USE_OPENAI = False  # <--- CAMBIADO A FALSE PARA USAR GEMINI
 
 if USE_OPENAI:
     openai.api_key = os.getenv("OPENAI_API_KEY")
