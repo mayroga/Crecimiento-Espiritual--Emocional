@@ -1,0 +1,447 @@
+{
+  "system": "KAMIZEN LIFE SAFETY - KNOWLEDGE BASE (REFINED CORE)",
+  "stage": "1-7",
+  "stories": [
+    {
+      "id": 1,
+      "cat": "growth",
+      "t": "The Hidden Roots of Growth",
+      "en": "A tiny seed carries a mighty oak inside. It dreams of clouds because it was born to be giant, building roots in the dark to sustain the greatness to come. You aren't just waiting; you are preparing the foundation to rise and become the businessman, the doctor, the engineer, or the teacher you always dreamed of being.",
+      "es": "Una pequeña semilla lleva un roble gigante por dentro. Sueña con las nubes porque nació para ser colosal, creando raíces en la oscuridad para sostener la grandeza que viene. No estás solo esperando; estás construyendo la base para levantarte y convertirte en el hombre de negocios, el médico, el ingeniero o el maestro que siempre soñaste ser."
+    },
+    {
+      "id": 2,
+      "cat": "adaptation",
+      "t": "The Weather of Opportunity",
+      "en": "A young seller only knew how to sell lemonade. When the weather changed, he adapted and sold warm drinks instead of stopping. Learn that life does not reward rigidity, but those who adjust and adapt quickly without losing direction.",
+      "es": "Un joven vendedor solo sabía vender limonada. Cuando el clima cambió, se adaptó y vendió bebidas calientes en lugar de detenerse. Aprende que la vida no premia la rigidez, sino a quienes se ajustan y se adaptan rápido sin perder el rumbo."
+    },
+    {
+      "id": 3,
+      "cat": "awareness",
+      "t": "The Invisible Safety Thread",
+      "en": "A child imagined a golden thread connecting him to safety. When he stayed aware of his surroundings, the thread stayed strong. When he got distracted, it felt weak. Your awareness is the invisible connection between you and your protection.",
+      "es": "Un niño imaginaba un hilo dorado que lo conectaba con la seguridad. Cuando estaba atento, el hilo era fuerte. Cuando se distraía, se debilitaba. Tu conciencia es la conexión invisible entre tú y tu protección."
+    },
+    {
+      "id": 4,
+      "cat": "money",
+      "t": "The Two Paths of Money",
+      "en": "A wise mind separates money into two paths: one for immediate needs and one for future growth. Those who only spend live in survival. Those who also save build freedom without realizing it.",
+      "es": "Una mente sabia separa el dinero en dos caminos: uno para necesidades inmediatas y otro para crecimiento futuro. Quienes solo gastan viven en supervivencia. Quienes ahorran también construyen libertad sin darse cuenta."
+    },
+    {
+      "id": 5,
+      "cat": "emotion",
+      "t": "The Glass of Emotional Clarity",
+      "en": "When emotions rise, the mind becomes cloudy like shaken water. If you wait without reacting, the mind settles and clarity returns. Decisions made in emotional chaos always distort reality.",
+      "es": "Cuando las emociones suben, la mente se vuelve turbia como agua agitada. Si esperas sin reaccionar, la mente se calma y vuelve la claridad. Las decisiones tomadas en caos emocional siempre distorsionan la realidad."
+    },
+    {
+      "id": 6,
+      "cat": "energy",
+      "t": "The Echo Principle",
+      "en": "A boy shouted into a mountain and heard his voice return. Learn that everything you send out into the world returns to you. Thoughts, actions, and words always return multiplied.",
+      "es": "Un niño gritó en una montaña y escuchó su voz regresar. Aprende que todo lo que envías al mundo vuelve a ti. Pensamientos, acciones y palabras siempre regresan multiplicadas."
+    },
+    {
+      "id": 7,
+      "cat": "learning",
+      "t": "The Pencil and Growth",
+      "en": "A pencil feared making mistakes, but learned that every error could be erased and improved. Your growth is not about perfection, but about continuing even after failure.",
+      "es": "Un lápiz tenía miedo de cometer errores, pero aprendió que cada error puede borrarse y mejorar. Tu crecimiento no es perfección, sino continuar incluso después del fallo."
+    },
+    {
+      "id": 8,
+      "cat": "intuition",
+      "t": "The Captain’s Internal Radar",
+      "en": "A captain notices small changes in wind before danger appears. As a human, you possess an internal signal called intuition. When something feels wrong for no apparent reason, your consciousness is your first layer of protection.",
+      "es": "Un capitán nota pequeños cambios en el viento antes del peligro. Los humanos también tienen una señal interna llamada intuición. Cuando algo se siente mal sin razón, la conciencia es tu primera protección."
+    },
+    {
+      "id": 9,
+      "cat": "family",
+      "t": "The Structure of Support",
+      "en": "A family is not built by perfection, but by support. Each person holds another when they weaken. Strength in a system comes from cooperation, not control.",
+      "es": "Una familia no se construye con perfección, sino con apoyo. Cada persona sostiene a otra cuando cae. La fuerza de un sistema viene de la cooperación, no del control."
+    },
+    {
+      "id": 10,
+      "cat": "value",
+      "t": "The Extra Value Principle",
+      "en": "Two creators offer the same product. One gives only what is asked, the other adds value without being asked. The second always wins because value creates trust, and trust creates opportunity.",
+      "es": "Dos creadores ofrecen el mismo producto. Uno da solo lo que se pide, el otro añade valor sin que se lo pidan. El segundo siempre gana porque el valor crea confianza y la confianza crea oportunidades."
+    },
+    {
+      "id": 11,
+      "cat": "mindset",
+      "t": "The Garden of Thought",
+      "en": "The mind grows whatever it is repeatedly exposed to. Negative thoughts grow into limits. Constructive thoughts grow into possibilities. Your internal environment defines your external results.",
+      "es": "La mente crece según a lo que se expone repetidamente. Los pensamientos negativos se convierten en límites. Los constructivos en posibilidades. Tu entorno interno define tus resultados externos."
+    },
+    {
+      "id": 12,
+      "cat": "situational_awareness",
+      "t": "The Walking Lion Principle",
+      "en": "A lion walks with full awareness, not distraction. It observes everything without panic. Awareness is not fear; it is controlled attention that increases survival and clarity.",
+      "es": "Un león camina con conciencia total, no con distracción. Observa todo sin pánico. La conciencia no es miedo; es atención controlada que aumenta la supervivencia y claridad."
+    },
+    {
+      "id": 13,
+      "cat": "financial_growth",
+      "t": "The Seed of Wealth",
+      "en": "Small savings behave like seeds. At first nothing is visible, but over time they grow into systems that support you. Wealth is built silently before it becomes visible.",
+      "es": "Los pequeños ahorros funcionan como semillas. Al principio no se ve nada, pero con el tiempo crecen en sistemas que te sostienen. La riqueza se construye en silencio antes de hacerse visible."
+    },
+    {
+      "id": 14,
+      "cat": "self_awareness",
+      "t": "The Mirror of Real Happiness",
+      "en": "A king searched outside for happiness but found it only when he helped others and looked within. Happiness is not extracted from the world; it is generated by how you interpret and act in it.",
+      "es": "Un rey buscó la felicidad fuera, pero solo la encontró cuando ayudó a otros y miró dentro de sí. La felicidad no se extrae del mundo; se genera por cómo lo interpretas y actúas en él."
+    },
+    {
+      "id": 15,
+      "cat": "social_control",
+      "t": "The Balloon of Ego",
+      "en": "Some people try to look powerful by reacting loudly. But real control is staying calm when others try to provoke you. Your response defines your strength more than their words.",
+      "es": "Algunas personas intentan parecer fuertes reaccionando con ruido. Pero el verdadero control es mantener la calma cuando otros te provocan. Tu respuesta define tu fuerza más que sus palabras."
+    },
+    {
+      "id": 16,
+      "cat": "discipline",
+      "t": "The Arrow of Focus",
+      "en": "An archer does not aim at noise or crowd, only at the target. Discipline is the ability to ignore distractions and keep your energy aligned with one direction until you hit your goal.",
+      "es": "Un arquero no apunta al ruido ni a la multitud, solo al objetivo. La disciplina es ignorar distracciones y mantener tu energía en una sola dirección hasta lograr la meta."
+    },
+    {
+      "id": 17,
+      "cat": "health",
+      "t": "The Human System",
+      "en": "Your body is a system, not a tool. When you sleep, eat well, and recover, you are not being lazy—you are maintaining the engine that carries your entire life forward.",
+      "es": "Tu cuerpo es un sistema, no una herramienta. Dormir, comer bien y recuperarte no es pereza—es mantener el motor que sostiene toda tu vida."
+    },
+    {
+      "id": 18,
+      "cat": "truth",
+      "t": "The Cost of Lies",
+      "en": "Lies create mental debt. Every false version of reality requires memory, effort, and fear of being exposed. Truth creates freedom because it requires no maintenance.",
+      "es": "Las mentiras crean deuda mental. Cada versión falsa de la realidad requiere memoria, esfuerzo y miedo a ser descubierto. La verdad crea libertad porque no necesita mantenimiento."
+    },
+    {
+      "id": 19,
+      "cat": "social_strength",
+      "t": "Standing Alone",
+      "en": "True strength is not following a group blindly. It is the ability to say no when something feels wrong, even if you stand alone. Identity is built in moments of resistance.",
+      "es": "La verdadera fuerza no es seguir a un grupo ciegamente. Es poder decir no cuando algo está mal, incluso si estás solo. La identidad se construye en momentos de resistencia."
+    },
+    {
+      "id": 20,
+      "cat": "discipline_endurance",
+      "t": "The Weight of Resistance",
+      "en": "When you feel like quitting, that moment is the real training. Discipline is not comfort; it is continuing even when your mind asks you to stop. That is where strength is created.",
+      "es": "Cuando quieres rendirte, ese momento es el verdadero entrenamiento. La disciplina no es comodidad; es continuar incluso cuando tu mente quiere parar. Ahí se crea la fuerza."
+    },
+    {
+      "id": 21,
+      "cat": "mastery",
+      "t": "Returning to Control",
+      "en": "Mastery is not never losing control, but noticing when you lost it and returning faster each time. Awareness is the bridge between impulse and intelligent action.",
+      "es": "La maestría no es nunca perder el control, sino darte cuenta cuando lo pierdes y volver más rápido cada vez. La conciencia es el puente entre el impulso y la acción inteligente."
+    },
+    {
+      "id": 22,
+      "cat": "leadership",
+      "t": "The Flying Formation",
+      "en": "A flock of geese flies in V formation. The leader leads, but when it gets tired, another takes its place. True leadership is not doing everything alone, but guiding others so the group keeps moving forward together.",
+      "es": "Una bandada de gansos vuela en formación en V. El líder guía, pero cuando se cansa otro toma su lugar. El verdadero liderazgo no es hacerlo todo solo, sino guiar a otros para que el grupo siga avanzando junto."
+    },
+    {
+      "id": 23,
+      "cat": "emotions",
+      "t": "The Passing Storm",
+      "en": "Emotions are like weather inside you. Sadness can feel like a storm, but storms always pass. If you stay calm and breathe, you will see that the sky inside you never disappears.",
+      "es": "Las emociones son como el clima dentro de ti. La tristeza puede sentirse como una tormenta, pero las tormentas siempre pasan. Si mantienes la calma y respiras, verás que el cielo dentro de ti nunca desaparece."
+    },
+    {
+      "id": 24,
+      "cat": "digital_safety",
+      "t": "The Two-Way Window",
+      "en": "The internet is like a window: you can see the world, but others can also see you. What you share must be protected like your home door. Awareness online is digital safety.",
+      "es": "Internet es como una ventana: tú puedes ver el mundo, pero otros también pueden verte a ti. Lo que compartes debe protegerse como la puerta de tu casa. La conciencia digital es seguridad en internet."
+    },
+    {
+      "id": 25,
+      "cat": "perseverance",
+      "t": "The Ant and the Rock",
+      "en": "An ant carries a heavy piece of food and falls many times. It never stops. Success is not speed, it is persistence. What seems impossible becomes possible through repetition.",
+      "es": "Una hormiga carga un trozo pesado de comida y cae muchas veces. Nunca se detiene. El éxito no es velocidad, es persistencia. Lo que parece imposible se vuelve posible con repetición."
+    },
+    {
+      "id": 26,
+      "cat": "money",
+      "t": "Need and Desire",
+      "en": "A wise mind learns to separate what is needed from what is wanted. Needs build stability, wants must be controlled. Financial freedom starts when you decide instead of impulse deciding for you.",
+      "es": "Una mente sabia aprende a separar lo que necesita de lo que desea. Las necesidades construyen estabilidad, los deseos deben ser controlados. La libertad financiera empieza cuando tú decides y no el impulso por ti."
+    },
+    {
+      "id": 27,
+      "cat": "respect",
+      "t": "Walking in Their Shoes",
+      "en": "Before judging someone, imagine their path. Every person carries invisible weight you cannot see. Respect begins when you understand that everyone is fighting a battle you know nothing about.",
+      "es": "Antes de juzgar a alguien, imagina su camino. Cada persona carga un peso invisible que no puedes ver. El respeto comienza cuando entiendes que todos luchan una batalla que tú no conoces."
+    },
+    {
+      "id": 28,
+      "cat": "danger_awareness",
+      "t": "Knowing the Exit",
+      "en": "When entering any place, always notice the exits. Awareness is not fear, it is preparation. The calm mind is the one that stays safe and can help others if something goes wrong.",
+      "es": "Al entrar en cualquier lugar, siempre observa las salidas. La conciencia no es miedo, es preparación. La mente calmada es la que se mantiene segura y puede ayudar a otros si algo sale mal."
+    },
+     {
+      "id": 29,
+      "cat": "love",
+      "t": "Love in Action",
+      "en": "Love is not only something you feel, it is something you do. Small actions like listening, helping, and being present are how real love is proven every day.",
+      "es": "El amor no es solo algo que sientes, es algo que haces. Pequeñas acciones como escuchar, ayudar y estar presente son la forma en que el amor real se demuestra cada día."
+    },
+    {
+      "id": 30,
+      "cat": "business",
+      "t": "Building Bridges",
+      "en": "A builder spent his life making bridges so others could cross difficult rivers. The best success is not what you keep, but what you make easier for others after you.",
+      "es": "Un constructor pasó su vida haciendo puentes para que otros cruzaran ríos difíciles. El mejor éxito no es lo que guardas, sino lo que haces más fácil para los demás después de ti."
+    },
+    {
+      "id": 31,
+      "cat": "school",
+      "t": "The Key Collection",
+      "en": "Every subject you learn in school is a key. You may not use every key today, but one day a door will appear that only one of them can open.",
+      "es": "Cada materia que aprendes en la escuela es una llave. Quizás no uses todas hoy, pero un día aparecerá una puerta que solo una de ellas podrá abrir."
+    },
+    {
+      "id": 32,
+      "cat": "family",
+      "t": "The Circle of Teamwork",
+      "en": "A strong family works like a team where everyone helps. When each person contributes, life becomes easier and there is more time for happiness together.",
+      "es": "Una familia fuerte funciona como un equipo donde todos ayudan. Cuando cada persona contribuye, la vida se vuelve más fácil y hay más tiempo para la felicidad juntos."
+    },
+    {
+      "id": 33,
+      "cat": "street_safety",
+      "t": "The Hidden Hook",
+      "en": "Not everything that looks attractive is safe. Just like a fish cannot see the hook, we must learn to recognize hidden risks and trust awareness over curiosity.",
+      "es": "No todo lo que parece atractivo es seguro. Así como un pez no ve el anzuelo, debemos aprender a reconocer riesgos ocultos y confiar en la conciencia más que en la curiosidad."
+    },
+    {
+      "id": 34,
+      "cat": "wellbeing",
+      "t": "The Power of Yet",
+      "en": "Saying 'I can't' closes the mind. Saying 'I can't yet' opens a path. Growth begins when you believe you are still in progress, not finished.",
+      "es": "Decir 'no puedo' cierra la mente. Decir 'no puedo todavía' abre un camino. El crecimiento empieza cuando entiendes que estás en proceso, no terminado."
+    },
+    {
+      "id": 35,
+      "cat": "happiness",
+      "t": "Gratitude Light",
+      "en": "A child with one toy can feel happier than someone with many things. Happiness grows when you appreciate what you already have instead of chasing what you don’t.",
+      "es": "Un niño con un solo juguete puede ser más feliz que alguien con muchas cosas. La felicidad crece cuando valoras lo que ya tienes en lugar de perseguir lo que no tienes."
+    },
+    {
+      "id": 36,
+      "cat": "body_awareness",
+      "t": "The Body Alarm System",
+      "en": "A child felt nervous before a test and thought something was wrong. His teacher explained that the body has an alarm system that activates when something is important, not dangerous. The feeling is energy preparing you, not a signal to escape.",
+      "es": "Un niño se sintió nervioso antes de un examen y pensó que algo estaba mal. Su profesor explicó que el cuerpo tiene un sistema de alarma que se activa cuando algo es importante, no peligroso. Esa sensación es energía preparándote, no una señal de huida."
+    },
+    {
+      "id": 37,
+      "cat": "fear_control",
+      "t": "Fear Without Control",
+      "en": "A boy learned that fear grows when it is ignored or followed blindly. But when he observes it calmly, fear becomes smaller and weaker. Fear is like a shadow: it disappears when you face it with awareness.",
+      "es": "Un niño aprendió que el miedo crece cuando se ignora o se sigue sin pensar. Pero cuando lo observa con calma, el miedo se hace pequeño. El miedo es como una sombra: desaparece cuando lo enfrentas con conciencia."
+    },
+    {
+      "id": 38,
+      "cat": "focus_body",
+      "t": "One Body, One Task",
+      "en": "A student tried to think about everything at once and felt overwhelmed. Then he learned to focus only on one question, one breath, one moment. When the body and mind do one thing at a time, everything becomes easier.",
+      "es": "Un estudiante intentó pensar en todo a la vez y se sintió abrumado. Luego aprendió a enfocarse solo en una pregunta, una respiración, un momento. Cuando el cuerpo y la mente hacen una cosa a la vez, todo se vuelve más fácil."
+    },
+    {
+      "id": 39,
+      "cat": "mental_reset",
+      "t": "The Restart Button",
+      "en": "A girl made a mistake in an exam and panicked. Her teacher told her to imagine a restart button in her mind. She paused, breathed, and continued. Every moment is a new chance to restart calmly.",
+      "es": "Una niña cometió un error en un examen y entró en pánico. Su profesora le dijo que imaginara un botón de reinicio en su mente. Se detuvo, respiró y continuó. Cada momento es una nueva oportunidad para reiniciar con calma."
+    },
+    {
+      "id": 40,
+      "cat": "inner_support",
+      "t": "The Inner Coach",
+      "en": "Inside every person there is a voice. One voice criticizes, another supports. The strongest students learn to listen to the voice that encourages them to continue step by step.",
+      "es": "Dentro de cada persona hay una voz. Una crítica, otra apoya. Los estudiantes más fuertes aprenden a escuchar la voz que los anima a continuar paso a paso."
+    },
+    {
+      "id": 41,
+      "cat": "performance",
+      "t": "Steady Hands",
+      "en": "A child noticed that when he rushed, he made mistakes. When he slowed down, his hands became steady and his answers improved. Speed without control creates errors, but calm creates accuracy.",
+      "es": "Un niño notó que cuando se apresuraba cometía errores. Cuando se calmaba, sus manos se volvían estables y sus respuestas mejoraban. La velocidad sin control crea errores, pero la calma crea precisión."
+    },
+    {
+      "id": 42,
+      "cat": "recovery",
+      "t": "After the Effort",
+      "en": "After finishing a difficult task, a child felt tired and worried about results. His mentor told him that rest is part of success. The mind grows stronger when it is allowed to recover.",
+      "es": "Después de terminar una tarea difícil, un niño se sintió cansado y preocupado por los resultados. Su mentor le dijo que el descanso también es parte del éxito. La mente se hace más fuerte cuando puede recuperarse."
+    },
+    {
+      "id": 43,
+      "cat": "body_control",
+      "t": "The Calm Body Signal",
+      "en": "A student learned that breathing slowly sends a signal to the body: ‘everything is safe.’ When the body feels safe, the mind becomes clearer and more focused.",
+      "es": "Un estudiante aprendió que respirar lentamente envía una señal al cuerpo: ‘todo está seguro’. Cuando el cuerpo se siente seguro, la mente se vuelve más clara y enfocada."
+    },
+    {
+      "id": 44,
+      "cat": "stress_balance",
+      "t": "The Balanced Engine",
+      "en": "A car works best when it is not too fast or too slow. The human body is the same. Balance between calm and action creates the best performance.",
+      "es": "Un coche funciona mejor cuando no va ni muy rápido ni muy lento. El cuerpo humano es igual. El equilibrio entre calma y acción crea el mejor rendimiento."
+    },
+    {
+      "id": 45,
+      "cat": "attention_control",
+      "t": "Returning Focus",
+      "en": "A boy noticed his mind drifting during an exam. Instead of fighting it, he gently brought it back to the question in front of him. Focus is not never losing attention, but returning it again and again.",
+      "es": "Un niño notó que su mente se distraía en un examen. En lugar de luchar, la volvió suavemente a la pregunta frente a él. El enfoque no es nunca distraerse, sino volver una y otra vez."
+    },
+    {
+      "id": 46,
+      "cat": "calm_tools",
+      "t": "Small Tools, Big Calm",
+      "en": "A student discovered that small actions like drinking water, breathing slowly, or sitting still can reset his mind. Big control comes from small calm actions.",
+      "es": "Un estudiante descubrió que pequeñas acciones como beber agua, respirar lento o quedarse quieto pueden reiniciar su mente. El gran control viene de pequeñas acciones de calma."
+    },
+    {
+      "id": 47,
+      "cat": "resilience",
+      "t": "Keep Moving Forward",
+      "en": "Even when tired, a child learned to continue slowly instead of stopping. Progress is not about speed, but about not giving up.",
+      "es": "Incluso cuando estaba cansado, un niño aprendió a continuar lentamente en lugar de detenerse. El progreso no es velocidad, es no rendirse."
+    },
+    {
+      "id": 48,
+      "cat": "energy_recovery",
+      "t": "The Recharge Moment",
+      "en": "A student realized that his brain works like a battery. When it feels empty, rest and breathing recharge it. Rest is not stopping, it is restoring power.",
+      "es": "Un estudiante entendió que su cerebro funciona como una batería. Cuando se siente vacío, el descanso y la respiración lo recargan. Descansar no es detenerse, es recuperar energía."
+    },
+    {
+      "id": 49,
+      "cat": "integration_mastery",
+      "t": "You Are Ready Now",
+      "en": "Before a big challenge, a child felt fear. Then he remembered everything he had learned: breathe, focus, go step by step. He realized he was more ready than he thought.",
+      "es": "Antes de un gran desafío, un niño sintió miedo. Luego recordó todo lo que había aprendido: respirar, enfocarse, ir paso a paso. Se dio cuenta de que estaba más preparado de lo que pensaba."
+    },
+    {
+      "id": 50,
+      "cat": "focus",
+      "t": "The Secret Saliva Thread",
+      "en": "Before a big test, the mouth turns dry and focus fades. A smart student knows that if water is gone, a tiny thread from his shirt can save the day. By chewing it, the body wakes up, saliva returns, and the mind locks back onto the answers. Resourcefulness is the key to winning when everything seems dry.",
+      "es": "Antes de un gran examen, la boca se seca y el enfoque se desvanece. Un estudiante inteligente sabe que si no hay agua, un pequeño hilo de su camisa puede salvar el día. Al masticarlo, el cuerpo despierta, la saliva vuelve y la mente se conecta de nuevo con las respuestas. El ingenio es la clave para ganar cuando todo parece seco."
+    },
+    {
+      "id": 51,
+      "cat": "safety",
+      "t": "The Visible Sentinel",
+      "en": "Waiting for a car isn't just standing around; it's a mission of visibility. A wise child stays in the light, where parents can see him from afar, staying away from the moving wheels. Being seen is being safe. Never hide from those who come to protect you.",
+      "es": "Esperar un auto no es solo estar parado; es una misión de visibilidad. Un niño sabio se queda en la luz, donde sus padres puedan verlo desde lejos, manteniéndose lejos de las ruedas en movimiento. Ser visto es estar a salvo. Nunca te escondas de quienes vienen a protegerte."
+    },
+    {
+      "id": 52,
+      "cat": "control",
+      "t": "The Full Stop Rule",
+      "en": "A car in motion is a machine in power. The pro knows that the belt stays on and the door stays shut until the car is at a 'dead stop'. Rushing to leave is for the weak; waiting for the stop is for the disciplined. Exit only when the world is still.",
+      "es": "Un auto en movimiento es una máquina con poder. El experto sabe que el cinturón se queda puesto y la puerta cerrada hasta que el carro para 'en seco'. Apurarse por salir es para los débiles; esperar la parada es para los disciplinados. Sal solo cuando el mundo esté quieto."
+    },
+    {
+      "id": 53,
+      "cat": "awareness",
+      "t": "The 60-Second Radar",
+      "en": "Every time you enter a room, give yourself one minute to look. Find the doors, find the exits, and find the person in charge. Even if you have been there before, the world changes. A sharp mind always knows the way out before it's needed.",
+      "es": "Cada vez que entras en un lugar, regálate un minuto para mirar. Encuentra las puertas, las salidas y a la persona a cargo. Incluso si ya has estado allí, el mundo cambia. Una mente aguda siempre conoce la salida antes de necesitarla."
+    },
+    {
+      "id": 54,
+      "cat": "protection",
+      "t": "The Shield of Preparation",
+      "en": "School is a place of learning, but also a place to be alert. Memorize the paths and know the protocol: Hide, Safe, and Run. Fear disappears when you have a plan. Knowledge is the armor that keeps you calm when others panic.",
+      "es": "La escuela es un lugar de aprendizaje, pero también de estar alerta. Memoriza los caminos y conoce el protocolo: Escóndete, Asegúrate y Corre. El miedo desaparece cuando tienes un plan. El conocimiento es la armadura que te mantiene tranquilo cuando otros entran en pánico."
+    },
+    {
+      "id": 55,
+      "cat": "memory",
+      "t": "The Mental Phonebook",
+      "en": "Phones can break or get lost, but your brain is forever. Storing the phone numbers of your family in your memory is like having a superpower. No matter where you are or what happens, you are never lost if you carry the connection in your head.",
+      "es": "Los teléfonos pueden romperse o perderse, pero tu cerebro es para siempre. Guardar los números de tu familia en tu memoria es como tener un superpoder. No importa dónde estés o qué pase, nunca estás perdido si llevas la conexión en tu cabeza."
+    },
+    {
+      "id": 56,
+      "cat": "mastery",
+      "t": "The Architect of Dreams",
+      "en": "Superpowers aren't found in capes, but in dreams. By keeping your brain awake and active before sleep, you learn to take the wheel of your imagination. In your dreams, you are the boss. You can fly and be strong because you control the mind that creates the world.",
+      "es": "Los superpoderes no están en las capas, sino en los sueños. Al mantener tu cerebro despierto y activo antes de dormir, aprendes a tomar el volante de tu imaginación. En tus sueños, tú mandas. Puedes volar y ser fuerte porque controlas la mente que crea ese mundo."
+    },
+    {
+      "id": 57,
+      "cat": "emotion",
+      "t": "The Imaginary Alliance",
+      "en": "Loneliness is just a feeling, not a reality. When you are alone, your imagination is your best friend. A plushie can talk and a toy can listen. Those who use their creativity to find company are never truly by themselves; they carry a whole world inside.",
+      "es": "La soledad es solo un sentimiento, no una realidad. Cuando estás solo, tu imaginación es tu mejor amiga. Un peluche puede hablar y un juguete puede escuchar. Quienes usan su creatividad para encontrar compañía nunca están realmente solos; llevan un mundo entero por dentro."
+    },
+    {
+      "id": 58,
+      "cat": "social",
+      "t": "The Art of Joining In",
+      "en": "You don't always need a name to start a game. Sometimes, just being there is enough. By moving closer and sharing the space, others will naturally accept you. Friendship doesn't always start with words; it starts by simply showing up to play.",
+      "es": "No siempre necesitas un nombre para empezar un juego. A veces, solo estar ahí es suficiente. Al acercarte y compartir el espacio, los demás te aceptarán naturalmente. La amistad no siempre empieza con palabras; empieza simplemente presentándote para jugar."
+    },
+    {
+      "id": 59,
+      "cat": "adaptation",
+      "t": "The Wisdom of Silence",
+      "en": "When a headache strikes, the eyes suffer, but the ears remain open. A smart student doesn't fight the pain by staring at screens; they close their eyes and let the teacher's voice paint the answers. You don't need to see to learn; you only need to listen.",
+      "es": "Cuando el dolor de cabeza ataca, los ojos sufren, pero los oídos permanecen abiertos. Un estudiante inteligente no lucha contra el dolor mirando pantallas; cierra los ojos y deja que la voz de la maestra pinte las respuestas. No necesitas ver para aprender; solo necesitas escuchar."
+    },
+    {
+      "id": 60,
+      "cat": "discipline",
+      "t": "The 20-Minute Balance",
+      "en": "Too much play makes the mind wander; too much work makes the soul tired. A god-like student plays for 5 to 20 minutes to keep the spirit fresh, then returns to the mission. Success is found in the balance between the joy of the game and the duty of the book.",
+      "es": "Mucho juego hace que la mente divague; mucho trabajo cansa el alma. Un estudiante que trabaja como un dios juega de 5 a 20 minutos para mantener el espíritu fresco, luego regresa a la misión. El éxito se encuentra en el equilibrio entre la alegría del juego y el deber del libro."
+    },
+    {
+      "id": 61,
+      "cat": "growth",
+      "t": "Working Like a God",
+      "en": "Lazy minds settle for an F, but powerful minds work like gods to reach the A. Don't be satisfied with one victory; a true champion knows that to be the smartest in the class, every single task must be handled with divine effort. Greatness is a habit, not a lucky shot.",
+      "es": "Las mentes perezosas se conforman con una F, pero las mentes poderosas trabajan como dioses para alcanzar la A. No te conformes con una victoria; un verdadero campeón sabe que para ser el más inteligente de la clase, cada tarea debe hacerse con un esfuerzo divino. La grandeza es un hábito, no un golpe de suerte."
+    },
+    {
+      "id": 62,
+      "cat": "awareness",
+      "t": "The Mirror of Trust",
+      "en": "Watch the ones you trust like a mirror. By observing every move and every word of your parents or teachers, you learn how the world works. A student who watches carefully doesn't just learn facts; they learn how to navigate life with wisdom.",
+      "es": "Observa a los que confías como un espejo. Al observar cada movimiento y palabra de tus padres o maestros, aprendes cómo funciona el mundo. Un estudiante que observa con atención no solo aprende datos; aprende a navegar la vida con sabiduría."
+    },
+    {
+      "id": 63,
+      "cat": "safety",
+      "t": "The Master of the Zone",
+      "en": "Even in a safe zone, the wheels keep turning. A master of safety never stops looking around, watching the movement of every car until the mission is over. True safety isn't found in a parking spot, but in the attention you pay to everything around you.",
+      "es": "Incluso en una zona segura, las ruedas siguen girando. Un maestro de la seguridad nunca deja de mirar a su alrededor, observando el movimiento de cada auto hasta que la misión termina. La verdadera seguridad no está en el parqueo, sino en la atención que pones a todo lo que te rodea." 
+    }
+  ]
+}
