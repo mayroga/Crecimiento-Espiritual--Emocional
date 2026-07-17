@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suite Universitaria de Desarrollo Autónomo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ingeniería de Software de Alta Precisión</h1>
+            <p>Corrección, Creación y Alineación de Sistemas Multiarchivo en RAM Local</p>
+        </header>
+
+        <!-- CAJA DE DESCRIPCIÓN PRINCIPAL -->
+        <div class="prompt-section">
+            <label><strong>Descripción del Sistema, Requerimientos o Instrucciones del Maestro:</strong></label>
+            <textarea id="appDescripcion" class="short-txt" placeholder="Describe qué debe hacer el sistema, introduce tus ideas desorganizadas o solicita una consulta técnica..."></textarea>
+        </div>
+
+        <!-- REJILLA DE 5 PANELES DINÁMICOS -->
+        <div class="quintuple-grid">
+            <div class="panel-card">
+                <input type="text" id="name1" class="file-name" value="server.py" placeholder="Nombre de Archivo 1">
+                <textarea id="code1" placeholder="Pega o genera el código 1..."></textarea>
+            </div>
+            <div class="panel-card">
+                <input type="text" id="name2" class="file-name" value="index.html" placeholder="Nombre de Archivo 2">
+                <textarea id="code2" placeholder="Pega o genera el código 2..."></textarea>
+            </div>
+            <div class="panel-card">
+                <input type="text" id="name3" class="file-name" value="script.js" placeholder="Nombre de Archivo 3">
+                <textarea id="code3" placeholder="Pega o genera el código 3..."></textarea>
+            </div>
+            <div class="panel-card">
+                <input type="text" id="name4" class="file-name" value="style.css" placeholder="Nombre de Archivo 4">
+                <textarea id="code4" placeholder="Pega o genera el código 4..."></textarea>
+            </div>
+            <div class="panel-card">
+                <input type="text" id="name5" class="file-name" value="" placeholder="Nombre de Archivo 5 (Opcional)">
+                <textarea id="code5" placeholder="Pega o genera el código 5 (Opcional)..."></textarea>
+            </div>
+        </div>
+
+        <!-- PANEL DE BOTONES DE ACCIÓN GUIADA REORGANIZADO -->
+        <div class="actions-suite">
+            <button id="btnCrear" class="btn-action pulse">🚀 Crear Aplicación</button>
+            <button id="btnExplorar" class="btn-action warning">🧠 Exploración y Sugerencias</button>
+            <button id="btnRevisar" class="btn-action info">🔍 Revisión de Apps y Códigos</button>
+            <button id="btnCorregir" class="btn-action success">🛠️ Corrección de Códigos</button>
+            <button id="btnBorrarTodo" class="btn-action danger">🗑️ Borrar Todo (Limpieza RAM)</button>
+        </div>
+
+        <!-- SECCIÓN DE EXPLICACIÓN Y RECTIFICACIÓN -->
+        <div class="report-section">
+            <h3>Sugerencias de Arquitectura, Explicación de Procesos y Códigos Sincronizados</h3>
+            <div id="sugerenciasPanel">Las guías maestras, análisis de exploración y explicaciones completas de tus códigos aparecerán aquí...</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
